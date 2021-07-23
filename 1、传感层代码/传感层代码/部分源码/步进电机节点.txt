@@ -1,0 +1,182 @@
+UINT16 SerialApp_ProcessEvent( uint8 task_id, UINT16 events )
+{
+	(void)task_id;  // Intentionally unreferenced parameter
+	
+	if ( events & SYS_EVENT_MSG )
+	{
+		afIncomingMSGPacket_t *MSGpkt;
+		
+		while ( (MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( SerialApp_TaskID )) )
+		{
+			switch ( MSGpkt->hdr.event )
+			{
+			case ZDO_CB_MSG:
+				//SerialApp_ProcessZDOMsgs( (zdoIncomingMsg_t *)MSGpkt );
+				break;
+				
+			case KEY_CHANGE:
+				SerialApp_HandleKeys( ((keyChange_t *)MSGpkt)->state, ((keyChange_t *)MSGpkt)->keys );
+				break;
+				
+			case AF_INCOMING_MSG_CMD:
+				SerialApp_ProcessMSGCmd( MSGpkt );
+				break;
+                
+            case ZDO_STATE_CHANGE:
+              SerialApp_NwkState = (devStates_t)(MSGpkt->hdr.status);
+              if ( (SerialApp_NwkState == DEV_ZB_COORD)
+                  || (SerialApp_NwkState == DEV_ROUTER)
+                  || (SerialApp_NwkState == DEV_END_DEVICE) )
+              {
+                #if defined(ZDO_COORDINATOR) //协调器通过串口输出自身短地址、IEEE  
+                    Broadcast_DstAddr.addrMode = (afAddrMode_t)AddrBroadcast;
+                    Broadcast_DstAddr.endPoint = SERIALAPP_ENDPOINT;
+                    Broadcast_DstAddr.addr.shortAddr = 0xFFFF;
+                    #if UART_DEBUG           
+                    PrintAddrInfo( NLME_GetShortAddr(), aExtendedAddress + Z_EXTADDR_LEN - 1);
+                    #endif 
+				
+                #else                        //终端无线发送短地址、IEEE   
+                    AfSendAddrInfo();
+
+			//联网成功启动周期性上报事件
+			osal_start_timerEx( SerialApp_TaskID,
+                            SERIALAPP_SEND_PERIODIC_EVT,
+                            SERIALAPP_SEND_PERIODIC_TIMEOUT );
+                #endif
+                
+              }
+              break;				
+			default:
+				break;
+			}
+			
+			osal_msg_deallocate( (uint8 *)MSGpkt );
+		}
+		
+		return ( events ^ SYS_EVENT_MSG );
+	}
+    
+    //在此事件中可以定时向协调器发送节点传感器参数信息
+    if ( events & SERIALAPP_SEND_PERIODIC_EVT )
+    {
+        SerialApp_SendPeriodicMessage();
+        
+        osal_start_timerEx( SerialApp_TaskID, SERIALAPP_SEND_PERIODIC_EVT,
+            (SERIALAPP_SEND_PERIODIC_TIMEOUT + (osal_rand() & 0x00FF)) );
+        
+        return (events ^ SERIALAPP_SEND_PERIODIC_EVT);
+    }
+    
+	if ( events & SERIALAPP_SEND_EVT )
+	{
+		SerialApp_Send();
+		return ( events ^ SERIALAPP_SEND_EVT );
+	}
+	
+	if ( events & SERIALAPP_RESP_EVT )
+	{
+		SerialApp_Resp();
+		return ( events ^ SERIALAPP_RESP_EVT );
+	}
+	
+	return ( 0 ); 
+}
+/******************************************************************************/
+void SerialApp_ProcessMSGCmd( afIncomingMSGPacket_t *pkt )
+{
+    uint16 shortAddr;
+    uint8 *pIeeeAddr; 
+    uint8 delay;
+    uint8 afRxData[30]={0};
+    uint8 afDataLen=0; 	
+    
+    switch ( pkt->clusterId )
+    {
+        // A message with a serial data block to be transmitted on the serial port.
+        case SERIALAPP_CLUSTERID:
+#if defined(ZDO_COORDINATOR)
+#else
+            //计算转动的圈数
+            //支持小数点
+            float count=(float)pkt->cmd.Data[1]+(float)((float)pkt->cmd.Data[2]/100);
+            Contrl_Step_motor(pkt->cmd.Data[0], count);
+#endif
+        break;
+
+        // A response to a received serial data block.
+        case SERIALAPP_CLUSTERID2:
+            if ((pkt->cmd.Data[1] == SerialApp_TxSeq) &&
+            ((pkt->cmd.Data[0] == OTA_SUCCESS) || (pkt->cmd.Data[0] == OTA_DUP_MSG)))
+            {
+                SerialApp_TxLen = 0;
+                osal_stop_timerEx(SerialApp_TaskID, SERIALAPP_SEND_EVT);
+            }
+            else
+            {
+                // Re-start timeout according to delay sent from other device.
+                delay = BUILD_UINT16( pkt->cmd.Data[2], pkt->cmd.Data[3] );
+                osal_start_timerEx( SerialApp_TaskID, SERIALAPP_SEND_EVT, delay );
+            }
+        break;
+
+        default:
+        break;
+    }
+}
+
+//**********************步进电机正转******************************
+void motor_up(float n)
+{
+    unsigned char i;
+    unsigned int j;
+    int movie_count=(int)(8*64*n);
+    for (j=0; j<movie_count; j++)
+    {
+        for (i=0; i<8; i++)
+        {
+            P0 = FFW[i];
+            Delay_ms(2);
+        }
+    }
+    P0 &=~0xF0;
+}
+
+//*********************步进电机反转********************************
+void motor_down(float n)
+{
+    unsigned char i;
+    unsigned int j;
+    int movie_count=(int)(8*64*n);
+    for (j=0; j<movie_count; j++)
+    {
+        for (i=0; i<8; i++)
+        {
+            P0 = REV[i];
+            Delay_ms(2);
+        }
+    }
+    
+    P0 &=~0xF0;
+}
+
+uint8 Contrl_Step_motor(int state, float count)
+{
+    if(state>0)
+    {
+        motor_down(count);
+    }
+    else
+    {
+        motor_up(count);
+    }
+}
+
+#endif
+
+//-------------------------------------------------------------------
+
+
+
+/*********************************************************************
+*********************************************************************/

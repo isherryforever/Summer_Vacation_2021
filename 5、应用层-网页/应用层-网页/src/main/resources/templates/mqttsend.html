@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:display="http://www.w3.org/1999/xhtml">
+<head>
+    <!--<meta charset="UTF-8">-->
+    <!--<meta http-equiv="Refresh" content="4">-->
+    <title>Title</title>
+    <style>
+        .black_overlay{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1001;
+            -moz-opacity: 0.8;
+            opacity:.80;
+            filter: alpha(opacity=88);
+        }
+        .white_content {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 55%;
+            height: 55%;
+            padding: 20px;
+            border: 10px solid orange;
+            background-color: white;
+            z-index:1002;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<form class="form-signin" th:action="@{/dashboard}" method="post">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="color:white; background:grey; witdth:70px; height:35px; border: 10px;" >返回主页</button>
+</form>
+<div style="padding: 30px 0px 0px 300px">
+<span th:text="继电器状态--" style="color: #999999;font-size: 40px";></span>
+<span th:text="${num}" style="color: #999999;font-size: 40px"></span>
+</div>
+<form class="form-signin" th:action="@{/on}" method="post">
+    <div style="padding:100px 0px 0px 400px">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="color:white; background:teal; border: 10px; font-size: 50px;border-radius:10px;">打开</button>
+    </div>
+</form>
+<form class="form-signin" th:action="@{/off}" method="post">
+    <div style="padding:200px 0px 0px 400px">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="color:white; background:teal; border: 10px; font-size: 50px;border-radius:10px;">关闭</button>
+    </div>
+</form>
+</body>
+</html>

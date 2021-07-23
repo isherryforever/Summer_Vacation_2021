@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Home</title>
+	<link rel="stylesheet" href="assets/styles/style.min.css" th:href="@{/assets/styles/style.min.css}">
+
+	<!-- Waves Effect -->
+	<link rel="stylesheet" href="assets/plugin/waves/waves.min.css" th:href="@{/assets/plugin/waves/waves.min.css}">
+
+</head>
+
+<body>
+
+	<div id="single-wrapper">
+		<form action="index.html" class="frm-single" th:action="@{/login}" method="post">
+			<div class="inside">
+				<div class="title"><strong>Bister</strong>管理</div>
+				<!-- /.title -->
+				<div class="frm-title">登陆</div>
+				<!-- /.frm-title -->
+				<div class="frm-input">
+					<input type="text" name="username" placeholder="用户名" th:placeholder="#{index.username}"
+						class="frm-inp">
+					<i class="fa fa-user frm-ico"></i>
+				</div>
+				<!-- /.frm-input -->
+				<div class="frm-input">
+					<input type="password" name="password" placeholder="密码" th:placeholder="#{index.password}"
+						class="frm-inp">
+
+					<i class="fa fa-lock frm-ico"></i>
+				</div>
+				<!-- /.frm-input -->
+				<div class="clearfix margin-bottom-20">
+					<div class="pull-left">
+						<div class="checkbox primary"><input type="checkbox" id="rememberme"><label
+								for="rememberme">记住我</label></div>
+						<!-- /.checkbox -->
+					</div>
+					<!-- /.pull-left -->
+					<div class="pull-right"><a href="page-recoverpw.html" class="a-link"><i
+								class="fa fa-unlock-alt"></i>忘记密码？</a></div>
+					<!-- /.pull-right -->
+				</div>
+				<!-- /.clearfix -->
+				<button type="submit" class="frm-submit">登陆<i class="fa fa-arrow-circle-right"></i></button>
+				<div class="row small-spacing">
+				</div>
+				<!-- /.row -->
+				<p style="color: rgb(255, 0, 0)" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+				<p style="color: rgb(255, 10, 173)" th:text="${msg1}" th:if="${not #strings.isEmpty(msg)}"></p>
+
+
+				<a href="page-register.html" class="a-link"><i class="fa fa-key"></i>第一次来？注册一下</a>
+				<div class="frm-footer">Bisterthea © 2021.</div>
+				<!-- /.footer -->
+			</div>
+			<!-- .inside -->
+		</form>
+		<!-- /.frm-single -->
+	</div>
+	<!--/#single-wrapper -->
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="assets/script/html5shiv.min.js"></script>
+		<script src="assets/script/respond.min.js"></script>
+	<![endif]-->
+	<!-- 
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="assets/scripts/jquery.min.js" type=" text/javascript"></script>
+	<script src="assets/scripts/modernizr.min.js" type=" text/javascript"></script>
+	<script src="assets/plugin/bootstrap/js/bootstrap.min.js" type=" text/javascript"></script>
+	<script src="assets/plugin/nprogress/nprogress.js" type=" text/javascript"></script>
+	<script src="assets/plugin/waves/waves.min.js" type=" text/javascript"></script>
+
+	<script src="assets/scripts/main.min.js" type=" text/javascript"></script>
+	<script>
+		L2Dwidget.init({
+			"model": {
+				//jsonpath控制显示那个小萝莉模型，
+				//(切换模型需要改动)
+				jsonPath: "https://unpkg.com/live2d-widget-model-z16@1.0.5/assets/z16.model.json",
+				"scale": 1
+			},
+			//https://unpkg.com/live2d-widget-model-z16@1.0.5/assets/z16.model.json
+			//https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json
+			"display": {
+				"position": "right", //看板娘的表现位置
+				"width": 120, //小萝莉的宽度
+				"height": 240, //小萝莉的高度
+				"hOffset": 0,
+				"vOffset": -20
+			},
+			"mobile": {
+				"show": true,
+				"scale": 0.5
+			},
+			"react": {
+				"opacityDefault": 0.7,
+				"opacityOnHover": 0.2
+			}
+		});
+	</script>
+</body>
+
+</html>

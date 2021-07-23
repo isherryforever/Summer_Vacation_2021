@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <!--<meta http-equiv="Refresh" content="4">-->
+    <title>可视化</title>
+    <script src="jquery-3.2.1.slim.min.js"></script>
+    <!--    <script src="echarts.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>-->
+    <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+
+
+</head>
+<body>
+<form class="form-signin" th:action="@{/dashboard}" method="post">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="color:white; background:grey; witdth:70px; height:35px; border: 10px;" >返回主页</button>
+</form>
+
+<div
+        id="main" style="width: 1500px; height: 800px;">
+</div>
+
+<script type="text/javascript">
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+
+    var option;
+    option = {
+        title: {// 图表标题，可以通过show:true/false控制显示与否，还有subtext:'二级标题',link:'http://www.baidu.com'等
+            text: '可视化数据实时监控'
+        },
+        tooltip: {
+            trigger: 'axis',
+        },
+        legend: {
+            data: ['温度', '湿度', '烟雾浓度']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',// 这几个属性可以控制图表上下左右的空白尺寸，可以自己试试。
+            containLabel: true
+        },
+        xAxis : [
+            {
+                name: '时间',
+                type : 'category',//设置x轴的类型 value数值轴 category类目轴 time时间轴 log对数轴
+                boundaryGap : false,
+                data: ['1','2','3','4','5','6','7']
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',// Y轴的定义
+            }
+        ],
+        series : [
+            {
+                name: '温度',
+                type: 'line',
+                smooth: true,
+                data: [120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name: '湿度',
+                type: 'line',
+                smooth: true,
+                data: [220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+                name: '烟雾浓度',
+                type: 'line',
+                smooth: true,
+                data: [150, 232, 201, 154, 190, 330, 410]
+            }
+        ]// 这里就是数据了
+    };
+    option2 = {
+        title: {// 图表标题，可以通过show:true/false控制显示与否，还有subtext:'二级标题',link:'http://www.baidu.com'等
+            text: '可视化数据实时监控'
+        },
+        legend: {
+            data: ['温度', '湿度', '烟雾浓度']
+        },
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            name: '温度',
+            data: [150, 230, 224, 218, 135, 147, 260],
+            type: 'line'
+        },
+            {
+                name: '湿度',
+                data: [170, 200, 124, 318, 235, 247, 160],
+                type: 'line'
+            },
+            {
+                name: '烟雾浓度',
+                data: [370, 400, 324, 418, 335, 299, 360],
+                type: 'line'
+            }
+        ]
+    };
+
+    option && myChart.setOption(option);
+
+</script>
+</body>
+</html>
+
+
+

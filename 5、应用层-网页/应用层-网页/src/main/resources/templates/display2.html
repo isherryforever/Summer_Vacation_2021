@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <!--<meta http-equiv="Refresh" content="4">-->
+    <title>可视化</title>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <!--    <script src="echarts.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>-->
+    <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+
+
+</head>
+<body>
+<form class="form-signin" th:action="@{/dashboard}" method="post">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="color:white; background:grey; witdth:70px; height:35px; border: 10px;" >返回主页</button>
+</form>
+
+<div
+        id="main" style="width: 1800px; height: 800px;">
+</div>
+
+<script async type="text/javascript">
+
+
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+
+        option = {
+            title: {// 图表标题，可以通过show:true/false控制显示与否，还有subtext:'二级标题',link:'http://www.baidu.com'等
+                x: 'center',
+                text: '可视化数据实时监控',
+                textStyle: {
+                    fontSize: 35,
+                    fontWeight: 'bolder',
+                },
+            },
+            tooltip: {
+                trigger: 'axis',
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                data: ['温度', '湿度', '烟雾浓度']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',// 这几个属性可以控制图表上下左右的空白尺寸，可以自己试试。
+                containLabel: true
+            },
+            dataZoom: {
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: [0],
+                    start: 1,
+                    end: 40,//设置X轴刻度之间的间隔(根据数据量来调整)
+                    zoomLock: true, //锁定区域禁止缩放(鼠标滚动会缩放,所以禁止)
+            },
+            xAxis : [{
+                    name: '时间',
+                    type : 'category',//设置x轴的类型 value数值轴 category类目轴 time时间轴 log对数轴
+                    boundaryGap : false,
+                    splitNumber: 15,
+                    data: [],
+                axisTick: {
+                    inside: true,
+                    lignWithLabel: true //这两行代码可以让刻度正对刻度名
+                },
+
+            }],
+
+            yAxis : [
+                {
+                    type : 'value',// Y轴的定义
+                }
+            ],
+            series : [
+                {
+                    name: '温度',
+                    type: 'line',
+                    smooth: true,
+                    data: []
+                },
+                {
+                    name: '湿度',
+                    type: 'line',
+                    smooth: true,
+                    data: []
+                },
+                {
+                    name: '烟雾浓度',
+                    type: 'line',
+                    smooth: true,
+                    data: []
+                }
+            ]// 这里就是数据了
+        };
+
+        $.post("http://127.0.0.1:80/hischart",{}, function (hisdata) {
+            console.log(hisdata.length);
+            for(let i=0;i<hisdata.length;i++)
+            {
+                option.series[0].data.push(hisdata[i].temperature);
+                option.series[1].data.push(hisdata[i].humidity);
+                option.series[2].data.push(hisdata[i].smog);
+                option.xAxis[0].data.push(hisdata[i].time.substr(5));
+            }
+            myChart.setOption(option);
+        })
+
+    // option2 = {
+    //     title: {// 图表标题，可以通过show:true/false控制显示与否，还有subtext:'二级标题',link:'http://www.baidu.com'等
+    //         text: '可视化数据实时监控'
+    //     },
+    //     legend: {
+    //         data: ['温度', '湿度', '烟雾浓度']
+    //     },
+    //     tooltip: {
+    //         trigger: 'axis',
+    //     },
+    //     xAxis: {
+    //         type: 'category',
+    //         boundaryGap : false,
+    //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    //     },
+    //     yAxis: {
+    //         type: 'value'
+    //     },
+    //     series: [{
+    //         name: '温度',
+    //         data:  [150, 230, 224, 218, 135, 147, 260],
+    //         type: 'line',
+    //         smooth: true,
+    //     },
+    //         {
+    //             name: '湿度',
+    //             data: [300, 400, 300, 500, 200, 100, 300],
+    //             type: 'line',
+    //             smooth: true,
+    //         },
+    //         {
+    //             name: '烟雾浓度',
+    //             data: [400,500,300,500,200,100,300],
+    //             type: 'line',
+    //             smooth: true,
+    //         }
+    //     ]
+    // };
+    this.setInterval(function () {
+        $.post("http://127.0.0.1:80/mychart",{}, function (data) {
+            // option.series[0].data.push(data.temperature);
+            // option.series[1].data.push(data.humidity);
+            // option.series[2].data.push(data.smog);
+            // option.xAxis[0].data.push(data.time);
+            //const resData = JSON.parse(data);//返回的数据为josn对象
+            console.log(data)
+            option.series[0].data.push(data.temperature);
+            option.series[1].data.push(data.humidity);
+            option.series[2].data.push(data.smog);
+            option.xAxis[0].data.push(data.time.substr(5));
+            myChart.setOption(option);
+            myChart.resize();
+        })
+    }, 1000)
+
+    //
+    // var i=0;
+    // this.setInterval(function () {
+    //
+    //      i++;
+    //     var j=i;
+    //     var k=j;
+    //     str=toString(i);
+    //     option.series[0].data.push(i);
+    //     option.series[1].data.push(j);
+    //     option.series[2].data.push(k);
+    //     option.xAxis[0].data.push(str);
+    //     myChart.setOption(option);
+    // }, 1000)
+
+    // option.series[0].data.push(100,200,300,500,200,100,300);
+    // option.series[1].data.push(300,400,300,500,200,100,300);
+    // option.series[2].data.push(400,500,300,500,200,100,300);
+    // option.xAxis[0].data.push('1', '2', '3', '4', '5', '6', '7');
+    // myChart.setOption(option);
+</script>
+</body>
+</html>
+
+
+

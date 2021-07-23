@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>实时数据检测</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            padding: 50px
+        }
+        .btn-w3r {
+            width: 200px;
+            height: 200px;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            background: #87ceeb; /* 旧版浏览器 */
+            background: -moz-linear-gradient(top, #4b91d9 0%, #244ccb 50%, #3386d9 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #67ace0), color-stop(50%, #123ead), color-stop(100%, #4ea8e0));
+        	background: -webkit-linear-gradient(top,  skyblue 0%, #26268c 50%,lightblue 100%);
+            background: -o-linear-gradient(top,  skyblue 0%, #26268c 50%,lightblue 100%);
+            background: -ms-linear-gradient(top,  skyblue 0%, #26268c 50%,lightblue 100%);
+            background: linear-gradient(to bottom,  skyblue 0%, #26268c 50%,lightblue 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cb60b3', endColorstr='#de47ac',GradientType=0 );
+            color:#fff;
+        }
+        .btn-w3r:hover {
+            background: #c4c1c1;
+            color: #282725;
+        }
+    </style>
+</head>
+<body background="bg2.jpg" style=" background-repeat:no-repeat ;background-size:100% 100%;
+background-attachment: fixed;">
+
+<div class="jumbotron2 text-center" style="margin-top:0;" >
+    <h1 style="font-size: 60px ;font-weight: 300; font-family: 华文琥珀">智能家居实时数据监测系统</h1>
+    <p style="font-size: 20px ; color: gray; padding: 30px 30px ">点击下面的按钮即可跳转详情页面！</p>
+</div>
+
+<div class="container">
+
+<form  action="dashboard.html" th:action="@{/success}" method="post">
+    <button  class="btn btn-lg btn-info btn-block" type="submit" style="color:white; background:deepskyblue;border: 10px;font-size: 35px;border-radius:8px;">最新数据</button>
+</form>
+
+<!--<div  style="padding: 0px 0px 0px 900px">-->
+<!--    <img src="college.jpg" width="250" height="150"/>-->
+<!--</div>-->
+<form  action="dashboard.html" th:action="@{/mqtt}" method="post">
+    <div style="padding: 60px 0px 0px 0px">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="color:white; background:darkslateblue;border: 10px;font-size: 35px;border-radius:8px;">电器控制</button>
+    </div>
+</form>
+<form  action="dashboard.html" th:action="@{/display}" method="post">
+    <div style="padding: 60px 0px 0px 0px">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="color:white; background:skyblue;border: 10px;font-size: 35px;border-radius:8px;">历史数据</button>
+    </div>
+</form>
+
+    <form  action="dashboard.html" th:action="@{/chart}" method="post">
+        <div style="padding: 60px 0px 0px 41%">
+            <button class="btn btn-w3r " type="submit" style="align-content: center; font-size: 30px" >数据视图</button>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>

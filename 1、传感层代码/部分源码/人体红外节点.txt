@@ -1,0 +1,35 @@
+void SampleApp_Send_P2P_Message( void )
+{
+  uint8 buff[5]={0};
+  byte len=0;
+  buff[0]=3;
+  buff[1]=GetPeople();//0无人，1有人
+  
+  if(buff[0] == 1)
+  {     
+    //有人进入
+    HalUARTWrite(0,"insecurity\n", 10);                //串口显示
+    HalLcdWriteString( "insecurity", HAL_LCD_LINE_3 ); //LCD显示 
+  }  
+  else 
+  {  
+    //无人
+    HalUARTWrite(0,"security\n", 9);                     //串口显示
+    HalLcdWriteString( "security", HAL_LCD_LINE_3 );     //LCD显示    
+  } 
+  
+  //无线发送到协调器
+  if ( AF_DataRequest( &SampleApp_P2P_DstAddr, &SampleApp_epDesc,
+                       SAMPLEAPP_P2P_CLUSTERID,
+                       2,
+                       buff,
+                       &SampleApp_MsgID,
+                       AF_DISCV_ROUTE,
+                       AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
+  {
+  }
+  else
+  {
+    // Error occurred in request to send.
+  }
+}

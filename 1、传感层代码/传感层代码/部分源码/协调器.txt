@@ -1,0 +1,82 @@
+void SampleApp_ProcessMSGCmd( afIncomingMSGPacket_t *pkt )
+{
+  uint8 buff[100]={0};
+  switch ( pkt->clusterId )
+  {
+#ifdef ZDO_COORDINATOR    
+  case SAMPLEAPP_P2P_CLUSTERID: 
+    {
+        uint8 id=pkt->cmd.Data[0];//终端id
+        uint8 d1=pkt->cmd.Data[1]; 
+        uint8 d2=pkt->cmd.Data[2]; 
+        if(id==1)//温湿度节点
+        {
+          //保存终端1的温度和湿度
+          temp1Int=d1;
+          hum1Int=d2;
+        }
+        else if(id==2)//烟感
+        {
+          //保存终端2烟感数值
+           DO=d1;//0未检测到气体，1检测到气体
+           AO=d2;//是0~100的数
+        }
+        else if(id==3)//人体传感器
+        {
+            if(pkt->cmd.Data[1]>0)
+            {
+              //检测到有人
+              LED1=0;
+              LED2=0;
+              LED3=0;
+            }
+            else
+            {
+              //无人
+              //setBuzzer(0);
+              LED1=1;
+              LED2=1;
+              LED3=1;
+            }
+        }    
+    }
+    break;
+#endif
+  case SAMPLEAPP_PERIODIC_CLUSTERID:
+
+    break;
+
+    default:
+      break;
+  }
+}
+void Handle()
+{
+if ( events & SAMPLEAPP_SEND_PERIODIC_MSG_EVT )
+  {
+#ifdef ZDO_COORDINATOR
+    //协调器串口输出数据
+    {
+      uint8 buff[100]={0};
+      //格式化数据包，用于串口输出
+      sprintf(buff, "Node1:Tem=%d Hu=:%d  Node2:DO=%d AO=%d \r\n", temp1Int, hum1Int, DO, AO);
+      //串口输出提示信息
+      HalUARTWrite(0, buff, osal_strlen(buff));  
+      //蜂鸣器报警
+      if(temp1Int>28||AO>50)
+        P0_7=1;
+      else
+        P0_7=0;
+      //步进电机控制
+      if ( temp1Int>20 ) 
+      {
+        buff[0]=0;//正转
+        buff[1]=1;//1圈
+        buff[2]=0;
+          //第一字节大于0反转
+          //第二字节N圈
+          //第三字节小数点圈数
+        SerialApp_SendDataToEndDevice(buff, 3);
+      }    
+    }
+}

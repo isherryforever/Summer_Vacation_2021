@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Refresh" content="10">
+    <title>Title</title>
+</head>
+<body>
+<form class="form-signin" th:action="@{/dashboard}" method="post">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="color:white; background:grey; witdth:70px; height:35px; border: 10px;" >返回主页</button>
+</form>
+<table class="table table-striped table-sm" th:cellpadding="30">
+    <thead>
+    <tr>
+        <td><img src="temperature.jpg" width="200" height="200"/></td>
+        <td><img src="humidity.jpg" width="200" height="200"/></td>
+        <td><img src="smog.jpg" width="200" height="200"/></td>
+        <td><img src="infrared.jpg" width="200" height="200"/></td>
+        <td><img src="time.jpg" width="200" height="200"/></td>
+    </tr>
+    <tr style="font-size: 30px">
+        <td  th:text="温度" ></td>
+        <td  th:text="湿度" ></td>
+        <td  th:text="烟雾浓度" ></td>
+        <td  th:text="红外状态" ></td>
+        <td  th:text="时间" ></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr style="font-size: 50px" th:each="ins:${s1}">
+        <td  th:text="${ins.temperature}" ></td>
+        <td  th:text="${ins.humidity}" ></td>
+        <td  th:text="${ins.smog}" ></td>
+        <td  th:text="${ins.infrared}" ></td>
+        <td  th:text="${ins.time}" ></td>
+    </tr>
+    </tbody>
+</table>
+<!--<p th:text="${s1[0].temperature}"></p>-->
+<!--<p th:text="${s1[0].humidity}"></p>-->
+<!--<p th:text="${s1[0].smog}"></p>-->
+<!--<p th:text="${s1[0].time}"></p>-->
+
+<!--<div th:each="ins:${s1}"></div>-->
+<!--<div th:text="${ins}"></div>-->
+<!--<p style="color:deepskyblue">最近50次检测的温度、湿度、烟雾浓度和人体红外情况</p>-->
+<!--<hr>-->
+<!--<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">-->
+<!--<div class="table-responsive">-->
+<!--<table class="table table-striped table-sm" style="color:black;background:orange" th:cellpadding="10">-->
+<!--<thead>-->
+<!--<tr>-->
+    <!--<th>温度</th>-->
+    <!--<th>湿度</th>-->
+    <!--<th>烟雾浓度</th>-->
+    <!--<th>人体红外</th>-->
+    <!--<th>时间</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr th:each="ins:${s1}">-->
+    <!--<td  th:text="${ins.temperature}"></td>-->
+    <!--<td  th:text="${ins.humidity}"></td>-->
+    <!--<td  th:text="${ins.smog}"></td>-->
+    <!--<td  th:text="${ins.infrared}"></td>-->
+    <!--<td  th:text="${ins.time}"></td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--</main>-->
+<!--<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">-->
+    <!--<div class="table-responsive">-->
+        <!--<table class="table table-striped table-sm">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>作品</th>-->
+                <!--<th>作者</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr th:each="ins:${in}">-->
+                <!--<td th:text="${ins.bookName}"></td>-->
+                <!--<td th:text="${ins.author}"></td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+<!--</main>-->
+</body>
+</html>

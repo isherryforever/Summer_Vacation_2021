@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>视频监控</title>
+
+	<!-- Main Styles -->
+	<link rel="stylesheet" href="assets/styles/style.min.css">
+
+	<!-- Material Design Icon -->
+	<link rel="stylesheet" href="assets/fonts/material-design/css/materialdesignicons.css">
+
+	<!-- mCustomScrollbar -->
+	<link rel="stylesheet" href="assets/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css">
+
+	<!-- Waves Effect -->
+	<link rel="stylesheet" href="assets/plugin/waves/waves.min.css">
+
+	<!-- Sweet Alert -->
+	<link rel="stylesheet" href="assets/plugin/sweet-alert/sweetalert.css">
+
+	<!-- Dark Themes -->
+	<link rel="stylesheet" href="assets/styles/style-black.min.css">
+</head>
+
+<body>
+	<div class="main-menu">
+		<header class="header">
+			<a href="index.html" class="logo"><i class="ico mdi mdi-cube-outline"></i>Bisthea</a>
+			<button type="button" class="button-close fa fa-times js__menu_close"></button>
+			<div class="user">
+				<a href="#" class="avatar"><img src="assets/images/avatar-sm-5.jpg" alt=""><span
+						class="status online"></span></a>
+				<h5 class="name"><a href="profile.html">Bisterthea</a></h5>
+				<h5 class="position">管理者</h5>
+				<!-- /.name -->
+				<div class="control-wrap js__drop_down">
+					<i class="fa fa-caret-down js__drop_down_button"></i>
+					<div class="control-list">
+						<div class="control-item"><a href="#"><i class="fa fa-user"></i> Profile</a></div>
+						<div class="control-item"><a href="#"><i class="fa fa-gear"></i> Settings</a></div>
+						<div class="control-item"><a href="#"><i class="fa fa-sign-out"></i> Log out</a></div>
+					</div>
+					<!-- /.control-list -->
+				</div>
+				<!-- /.control-wrap -->
+			</div>
+			<!-- /.user -->
+		</header>
+		<!-- /.header -->
+		<div class="content">
+
+			<div class="navigation">
+				<h5 class="title">导航</h5>
+				<!-- /.title -->
+				<ul class="menu js__accordion">
+					<li>
+						<a class="waves-effect" href="index.html"><i
+								class="menu-icon mdi mdi-view-dashboard"></i><span>仪表盘</span></a>
+					</li>
+					<li class="current active">
+						<a class="waves-effect parent-item js__control" href="#"><i
+								class="menu-icon mdi mdi-desktop-mac"></i><span>其他数据</span><span
+								class="menu-arrow fa fa-angle-down"></span></a>
+						<ul class="sub-menu js__content">
+							<li class="current"><a href="#">视频监控</a></li>
+						</ul>
+						<!-- /.sub-menu js__content -->
+					</li>
+					<li>
+						<!-- /.sub-menu js__content -->
+					</li>
+					<li>
+						<!-- /.sub-menu js__content -->
+					</li>
+
+				</ul>
+				<!-- /.menu js__accordion -->
+
+				<!-- /.title -->
+				<ul class="menu js__accordion">
+
+					<li>
+
+						<!-- /.sub-menu js__content -->
+					</li>
+					<li>
+						<!-- /.sub-menu js__content -->
+					</li>
+					<li>
+
+						<!-- /.sub-menu js__content -->
+					</li>
+					<li>
+
+						<!-- /.sub-menu js__content -->
+					</li>
+				</ul>
+				<!-- /.menu js__accordion -->
+			</div>
+			<!-- /.navigation -->
+		</div>
+		<!-- /.content -->
+	</div>
+	<!-- /.main-menu -->
+
+	<div class="fixed-navbar">
+		<div class="pull-left">
+			<button type="button"
+				class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
+			<h1 class="page-title">Typography</h1>
+			<!-- /.page-title -->
+		</div>
+		<!-- /.pull-left -->
+		<div class="pull-right">
+			<div class="ico-item">
+				<a href="#" class="ico-item mdi mdi-magnify js__toggle_open" data-target="#searchform-header"></a>
+				<form action="#" id="searchform-header" class="searchform js__toggle"><input type="search"
+						placeholder="Search..." class="input-search"><button class="mdi mdi-magnify button-search"
+						type="submit"></button></form>
+				<!-- /.searchform -->
+			</div>
+			<!-- /.ico-item -->
+			<a href="#" class="ico-item mdi mdi-email notice-alarm js__toggle_open" data-target="#message-popup"></a>
+			<a href="#" class="ico-item pulse"><span class="ico-item mdi mdi-bell notice-alarm js__toggle_open"
+					data-target="#notification-popup"></span></a>
+			<a href="#" class="ico-item mdi mdi-logout js__logout"></a>
+		</div>
+		<!-- /.pull-right -->
+	</div>
+	<!-- /.fixed-navbar -->
+
+	<div id="notification-popup" class="notice-popup js__toggle" data-space="75">
+		<h2 class="popup-title">Your Notifications</h2>
+		<!-- /.popup-title -->
+		<div class="content">
+			<ul class="notice-list">
+			</ul>
+			<!-- /.notice-list -->
+			<a href="#" class="notice-read-more">See more messages <i class="fa fa-angle-down"></i></a>
+		</div>
+		<!-- /.content -->
+	</div>
+	<!-- /#notification-popup -->
+
+	<div id="message-popup" class="notice-popup js__toggle" data-space="75">
+		<h2 class="popup-title">Recent Messages<a href="#" class="pull-right text-danger">New message</a></h2>
+		<!-- /.popup-title -->
+		<div class="content">
+			<ul class="notice-list">
+				<li>
+					<a href="#">
+						<span class="avatar"><img src="assets/images/avatar-sm-1.jpg" alt=""></span>
+						<span class="name">John Doe</span>
+						<span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere
+							repellat voluptates.</span>
+						<span class="time">10 min</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span class="avatar"><img src="assets/images/avatar-sm-3.jpg" alt=""></span>
+						<span class="name">Harry Halen</span>
+						<span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere
+							repellat voluptates.</span>
+						<span class="time">15 min</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span class="avatar"><img src="assets/images/avatar-sm-4.jpg" alt=""></span>
+						<span class="name">Thomas Taylor</span>
+						<span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere
+							repellat voluptates.</span>
+						<span class="time">30 min</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span class="avatar"><img src="assets/images/avatar-1.jpg" alt=""></span>
+						<span class="name">Jennifer</span>
+						<span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere
+							repellat voluptates.</span>
+						<span class="time">45 min</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span class="avatar"><img src="assets/images/avatar-sm-5.jpg" alt=""></span>
+						<span class="name">Helen Candy</span>
+						<span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere
+							repellat voluptates.</span>
+						<span class="time">45 min</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span class="avatar"><img src="assets/images/avatar-2.jpg" alt=""></span>
+						<span class="name">Anna Cavan</span>
+						<span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere
+							repellat voluptates.</span>
+						<span class="time">1 hour ago</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span class="avatar bg-success"><i class="fa fa-user"></i></span>
+						<span class="name">Jenny Betty</span>
+						<span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere
+							repellat voluptates.</span>
+						<span class="time">1 day ago</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span class="avatar"><img src="assets/images/avatar-5.jpg" alt=""></span>
+						<span class="name">Denise Peterson</span>
+						<span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere
+							repellat voluptates.</span>
+						<span class="time">1 year ago</span>
+					</a>
+				</li>
+			</ul>
+			<!-- /.notice-list -->
+			<a href="#" class="notice-read-more">See more messages <i class="fa fa-angle-down"></i></a>
+		</div>
+		<!-- /.content -->
+	</div>
+	<!-- /#message-popup -->
+	<div id="wrapper">
+		<div class="main-content">
+			<div class="row small-spacing">
+				<div class="col-xs-12">
+					<div class="box-content">
+						<h4 class="box-title">监控</h4>
+						<div class="dropdown js__drop_down">
+							<a href="#"
+								class="dropdown-icon glyphicon glyphicon-option-vertical js__drop_down_button"></a>
+							<ul class="sub-menu">
+								<li><a href="http://34339k72u0.qicp.vip/?action=snapshot">下载截图</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else there</a></li>
+								<li class="split"></li>
+								<li><a href="#">Separated link</a></li>
+							</ul>
+							<!-- /.sub-menu -->
+						</div>
+						<!-- /.box-title -->
+						<!-- /.dropdown js__dropdown -->
+
+						<div align="center">
+							<img src="http://3510i184w0.51vip.biz/" width=1200px height=800px />
+						</div>
+						<!-- /#flot-chart-1.flot-chart -->
+					</div>
+					<!-- /.box-content -->
+				</div>
+				<!-- /.box-content -->
+			</div>
+			<!-- /.col-lg-4 col-xs-12 -->
+		</div>
+		<!-- /.row -->
+		<!-- /.col-lg-3 col-md-6 col-xs-12 -->
+	</div>
+	<!-- .row -->
+
+
+	<footer class="footer">
+		<ul class="list-inline">
+			<li>Copyright &copy; 2019.Company name All rights reserved.</li>
+			<li><a href="#">Privacy</a></li>
+			<li><a href="#">Terms</a></li>
+			<li><a href="#">Help</a></li>
+		</ul>
+	</footer>
+	</div>
+	<!-- /.main-content -->
+	</div>
+	<!--/#wrapper -->
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="assets/script/html5shiv.min.js"></script>
+		<script src="assets/script/respond.min.js"></script>
+	<![endif]-->
+	<!-- 
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script>
+		L2Dwidget.init({
+			"model": {
+				//jsonpath控制显示那个小萝莉模型，
+				//(切换模型需要改动)
+				jsonPath: "https://unpkg.com/live2d-widget-model-z16@1.0.5/assets/z16.model.json",
+				"scale": 1
+			},
+			//https://unpkg.com/live2d-widget-model-z16@1.0.5/assets/z16.model.json
+			//https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json
+			"display": {
+				"position": "right", //看板娘的表现位置
+				"width": 120, //小萝莉的宽度
+				"height": 240, //小萝莉的高度
+				"hOffset": 0,
+				"vOffset": -20
+			},
+			"mobile": {
+				"show": true,
+				"scale": 0.5
+			},
+			"react": {
+				"opacityDefault": 0.7,
+				"opacityOnHover": 0.2
+			}
+		});
+	</script>
+	<script src="assets/scripts/jquery.min.js"></script>
+	<script src="assets/scripts/modernizr.min.js"></script>
+	<script src="assets/plugin/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="assets/plugin/nprogress/nprogress.js"></script>
+	<script src="assets/plugin/sweet-alert/sweetalert.min.js"></script>
+	<script src="assets/plugin/waves/waves.min.js"></script>
+
+	<script src="assets/scripts/main.min.js"></script>
+</body>
+
+</html>
